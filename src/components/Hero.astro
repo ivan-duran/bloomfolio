@@ -35,11 +35,9 @@ const { name, title, description, avatar, location, socialLinks } = Astro.props;
       <h1 class="text-5xl font-bold mb-4">
         Hi, I'm {name}
       </h1>
-      <p class="text-xl text-base-content/80 mb-2">{title}</p>
+      <p class="text-xl text-base-content/80 mb-2" set:html={title} />
       {location && <p class="text-base-content/60 mb-4">{location}</p>}
-      <p class="text-lg leading-relaxed mb-6">
-        {description}
-      </p>
+      <p class="text-lg leading-relaxed mb-6" set:html={description} />
       {
         socialLinks && (
           <div class="flex gap-4">

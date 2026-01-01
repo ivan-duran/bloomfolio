@@ -22,9 +22,9 @@ const { title, photo, Content } = Astro.props;
       }
       <div class="card-body">
         <h2 class="card-title text-2xl">{title}</h2>
-        <p class="text-lg">
+        <div class="text-lg">
           <Content />
-        </p>
+        </div>
         <div class="card-actions justify-end">
           <div class="tooltip" data-tip="More about me">
             <a
