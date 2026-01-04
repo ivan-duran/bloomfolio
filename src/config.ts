@@ -95,25 +95,25 @@ export interface SiteConfig {
  * Update these values to customize your portfolio
  */
 export const siteConfig: SiteConfig = {
-  name: "🌻 Bloomfolio",
-  title: "Astro Portfolio Template built with 🌼 DaisyUI",
+  name: "Iván Durán",
+  title: "<Strong>Full-Stack Web Developer | 5th-year Computer Engineering (UACh)</Strong>",
   description:
-    "A modern, responsive, and customizable portfolio template built with Astro and DaisyUI. Perfect for developers, designers, and creatives to showcase their work and skills.",
+    "I build web applications using <Strong>React, Angular, and Astro</Strong>, backed by <Strong>FastAPI and PostgreSQL</Strong>, with a strong focus on <Strong>user experience and best development practices.</Strong>",
   avatar: "../assets/bloomfolio.png",
-  location: "🇧🇷 Brazil",
-  email: "hello@example.com",
+  location: "🇨🇱 Valdivia, Chile",
+  email: "ivan@durandev.com",
   socialLinks: {
-    github: "https://github.com/lauroguedes",
-    linkedin: "https://linkedin.com/in/lauroguedes",
-    twitter: "https://twitter.com/leowg",
-    bluesky: "https://bsky.app/profile/lauroguedes.bsky.social",
-    instagram: "https://instagram.com/lauroguedes.dev",
-    youTube: "https://youtube.com/leowgweb",
-    codetips: "https://codetips.cloud/u/lauroguedes",
+    github: "https://github.com/ivan-duran",
+    linkedin: "https://www.linkedin.com/in/ivan-duran-40745a2ba/",
+    twitter: "",
+    bluesky: "",
+    instagram: "",
+    youTube: "",
+    codetips: "",
   },
-  enableThemeSelector: true,
+  enableThemeSelector: false,
   extraLinks: {
-    enable: true,
+    enable: false,
     links: [
       {
         link: "/blog/guides/bloomfolio-complete-guide",
@@ -140,7 +140,7 @@ export const siteConfig: SiteConfig = {
   sections: {
     about: true,
     projects: true,
-    blog: true,
+    blog: false,
     work: true,
     education: true,
     hackathons: true,

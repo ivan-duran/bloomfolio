@@ -1,6 +1,6 @@
 ---
 title: "About Me"
-photo: "https://api.dicebear.com/9.x/adventurer-neutral/svg?seed=Destiny&scale=90&backgroundColor=763900,9e5622,ecad80,f2d3b1,c0aede,b6e3f4"
+photo: "/avatar.png"
 ---
-
-I'm a full-stack developer with a passion for creating beautiful, functional, and user-friendly web applications. With experience in **modern frameworks and technologies**, I love turning ideas into reality through code. When I'm not coding, you can find me **exploring new technologies**, contributing to open source, or enjoying a good cup of coffee.
+> I’m a **5th-year Computer Engineering student** (UACh) with experience building and deploying **full-stack web applications**. I’ve worked on **real-world projects**, handling frontend, backend, and deployment on **Linux VPS servers** with custom domains.
+> I’m looking for a **junior web developer role** where I can apply my skills in modern web technologies, contribute to production systems, and continue learning best practices.

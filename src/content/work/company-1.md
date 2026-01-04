@@ -1,10 +1,12 @@
 ---
-title: "Tech Corp"
-subtitle: "Senior Full Stack Developer"
-logo: "https://api.dicebear.com/9.x/shapes/svg?seed=Easton"
-startDate: "2021-06-01"
-endDate: "2024-01-01"
-link: "https://example.com"
+title: "Estudiocienpies"
+subtitle: "Web Developer (Client Project – Oftalmosur)"
+logo: ""
+startDate: "2025-01-02"
+endDate: "2025-02-15"
+link: "https://estudiocienpies.cl"
 ---
 
-Led development of multiple high-impact web applications using React, Node.js, and PostgreSQL. Mentored junior developers and implemented best practices for code quality and testing.
+Worked as a web developer for **Estudiocienpies**, contributing to the development of a website for the medical clinic **Oftalmosur**.  
+Built the site **from scratch using WordPress**, focusing on **user experience (UX)**, structure, and responsive design.  
+Collaborated with a design team to translate visual concepts into a functional, user-friendly website aligned with client needs.
