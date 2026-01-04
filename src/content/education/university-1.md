@@ -1,10 +1,11 @@
 ---
-title: "University of Technology"
-subtitle: "Bachelor of Science in Computer Science"
-logo: "https://api.dicebear.com/9.x/icons/svg?seed=Nolan"
-startDate: "2015-09-01"
-endDate: "2019-05-30"
-link: "https://university.edu"
+title: "Universidad Austral de Chile (UACh)"
+subtitle: "Computer Engineering (B.Eng.)"
+logo: "https://api.dicebear.com/9.x/icons/svg?seed=UACh"
+startDate: "2022-03-01"
+endDate: "2027-07-01"
+link: "https://www.uach.cl"
 ---
 
-Focused on software engineering, algorithms, and data structures. Graduated with honors and participated in various coding competitions.
+Currently in my **5th year of Computer Engineering**, with a strong focus on **software development** and **web technologies**.  
+My studies combine theoretical foundations with **hands-on projects**, including real-world academic and client-oriented web applications.
