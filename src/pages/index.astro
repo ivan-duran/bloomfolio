@@ -29,8 +29,28 @@ const { Content: AboutContent } = await render(aboutEntry);
       description={siteConfig.description}
       avatar={bloomfolioLogo}
       location={siteConfig.location}
+      email={siteConfig.email}
       socialLinks={siteConfig.socialLinks}
     />
+
+    <!-- Projects Section -->
+    {siteConfig.sections.projects && <Projects />}
+
+    <!-- Blog Section -->
+    {siteConfig.sections.blog && <Blog />}
+
+    <!-- Work Experience Section -->
+    {
+      siteConfig.sections.work && (
+        <Timeline
+        collection="work"
+        variant="timeline"
+        color="primary"
+        icon={Briefcase}
+        sectionTitle="Work Experience"
+        />
+      )
+    }
 
     <!-- About Section -->
     {
@@ -43,35 +63,16 @@ const { Content: AboutContent } = await render(aboutEntry);
       )
     }
 
-    <!-- Projects Section -->
-    {siteConfig.sections.projects && <Projects />}
-
-    <!-- Blog Section -->
-    {siteConfig.sections.blog && <Blog />}
-
-    <!-- Work Experience Section -->
-    {
-      siteConfig.sections.work && (
-        <Timeline
-          collection="work"
-          variant="timeline"
-          color="primary"
-          icon={Briefcase}
-          sectionTitle="Work Experience"
-        />
-      )
-    }
-
     <!-- Education Section -->
     {
       siteConfig.sections.education && (
         <Timeline
-          collection="education"
-          variant="list"
-          color="secondary"
-          backgroundColor="base-300"
-          icon={GraduationCap}
-          sectionTitle="Education"
+        collection="education"
+        variant="list"
+        color="secondary"
+        backgroundColor="base-300"
+        icon={GraduationCap}
+        sectionTitle="Education"
         />
       )
     }
