@@ -153,6 +153,11 @@ function calculateDuration(startDate: Date, endDate?: Date) {
           </div>
         )
       }
+      {demoLink?.includes("solarweb.lat") && (
+        <p class="text-sm text-base-content/60 mb-6">
+          Note: Public access is limited due to authentication requirements.
+        </p>
+      )}
     </header>
 
     <!-- Tech Stack Showcase -->

@@ -87,5 +87,10 @@ function formatPeriod(startDate: Date, endDate?: Date) {
         </a>
       </div>
     </div>
+    {project.data.demoLink?.includes("solarweb.lat") && (
+      <p class="text-xs text-base-content/60 mt-2">
+        Note: Public access is limited due to authentication requirements.
+      </p>
+    )}
   </div>
 </article>

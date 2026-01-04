@@ -2,8 +2,10 @@
 title: "Oftalmosur Clinic Website"
 description: "Website developed from scratch for a medical clinic, focused on user experience, clarity, and responsive design."
 image: "https://api.dicebear.com/9.x/glass/svg?seed=Oftalmosur"
-startDate: "2023-01-01"
+startDate: "2025-01-02"
+endDate: "2025-02-15"
 skills: ["WordPress", "UX Design", "Responsive Design", "HTML", "CSS"]
+demoLink: "https://practica.estudiocienpies.cl/"
 ---
 
 ## About Oftalmosur Website
