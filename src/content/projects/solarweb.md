@@ -1,7 +1,7 @@
 ---
 title: "SolarWeb: Remote Radiation Data Management"
 description: "Web platform developed to remotely visualize, manage, and export radiation sensor data, solving storage and performance challenges in a real academic environment."
-image: "https://api.dicebear.com/9.x/glass/svg?seed=Radiation"
+image: "./solarweb-preview.png"
 startDate: "2025-08-01"
 endDate: "2025-12-18"
 skills: ["Angular", "TypeScript", "FastAPI", "PostgreSQL", "InfluxDB", "MinIO", "Docker", "ZeroTier", "Linux"]

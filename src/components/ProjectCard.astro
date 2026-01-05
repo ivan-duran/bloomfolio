@@ -47,6 +47,11 @@ function formatPeriod(startDate: Date, endDate?: Date) {
       {project.data.skills.map((skill) => <SkillBadge skill={skill} />)}
     </div>
     <div class="card-actions justify-end mt-4 gap-2">
+      {project.data.demoLink?.includes("solarweb.lat") && (
+      <p class="text-xs text-base-content/60 mt-2">
+        Note: Public access is limited due to authentication requirements.
+      </p>
+      )}
       {
         project.data.demoLink && (
           <a
@@ -87,10 +92,5 @@ function formatPeriod(startDate: Date, endDate?: Date) {
         </a>
       </div>
     </div>
-    {project.data.demoLink?.includes("solarweb.lat") && (
-      <p class="text-xs text-base-content/60 mt-2">
-        Note: Public access is limited due to authentication requirements.
-      </p>
-    )}
   </div>
 </article>
