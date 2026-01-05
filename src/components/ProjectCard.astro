@@ -30,8 +30,8 @@ function formatPeriod(startDate: Date, endDate?: Date) {
         src={project.data.image}
         alt={project.data.title}
         class="w-full h-full object-cover"
-        width={600}
-        height={400}
+        widths={[600, 900, 1200]}
+        sizes="(max-width: 600px) 600px, (max-width: 900px) 900px, 1200px"
       />
     </figure>
   </a>
