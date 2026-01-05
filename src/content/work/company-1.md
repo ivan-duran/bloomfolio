@@ -1,7 +1,7 @@
 ---
 title: "Estudiocienpies"
 subtitle: "Web Developer (Client Project – Oftalmosur)"
-logo: ""
+logo: "/images/company-1.jpg"
 startDate: "2025-01-02"
 endDate: "2025-02-15"
 link: "https://estudiocienpies.cl"

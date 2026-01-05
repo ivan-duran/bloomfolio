@@ -1,7 +1,7 @@
 ---
 title: "Universidad Austral de Chile (UACh)"
 subtitle: "Full-Stack Web Developer (Academic Project)"
-logo: "https://api.dicebear.com/9.x/shapes/svg?seed=UACh"
+logo: "/images/company-2.png"
 startDate: "2025-08-01"
 endDate: "2025-12-18"
 link: "https://www.uach.cl"
