@@ -66,7 +66,7 @@ const entriesWithContent = await Promise.all(
 
     {
       variant === "timeline" ? (
-        <ul class="timeline timeline-vertical timeline-snap-icon">
+        <ul class="timeline timeline-vertical timeline-compact md:timeline-snap-icon">
           {entriesWithContent.map(({ entry, Content }, index) => (
             <li>
               {index > 0 && <hr class="bg-base-100" />}
@@ -74,31 +74,31 @@ const entriesWithContent = await Promise.all(
                 <IconComponent class={`size-5 text-${color} mx-3 my-1`} />
               </div>
               <div
-                class={`timeline-${index % 2 === 0 ? "start" : "end"} pt-3 mb-10`}
+                class={`timeline-end md:timeline-${index % 2 === 0 ? "start" : "end"} pt-3 mb-10`}
               >
                 <time
-                  class={`font-mono text-sm text-base-content/70 block italic ${index % 2 === 0 ? "text-end" : ""}`}
+                  class={`font-mono text-sm text-base-content/70 block italic text-start md:${index % 2 === 0 ? "text-end" : "text-start"}`}
                 >
                   {formatPeriod(entry.data.startDate, entry.data.endDate)}
                 </time>
                 <div class="card bg-base-100 shadow-xl mt-2">
                   <div class="card-body">
-                    <div class="flex items-center gap-4 mb-2">
+                    <div class="flex items-center gap-4 mb-2 min-w-0">
                       {entry.data.logo && (
-                        <div class="avatar">
+                        <div class="avatar shrink-0">
                           <div class="w-12 mask mask-squircle">
                             <img src={entry.data.logo} alt={entry.data.title} />
                           </div>
                         </div>
                       )}
-                      <div>
-                        <h3 class="card-title">{entry.data.title}</h3>
-                        <p class={`text-${color} font-semibold`}>
+                      <div class="min-w-0">
+                        <h3 class="card-title break-words">{entry.data.title}</h3>
+                        <p class={`text-${color} font-semibold break-words`}>
                           {entry.data.subtitle}
                         </p>
                       </div>
                     </div>
-                    <div class="prose prose-sm max-w-none text-base-content/80">
+                    <div class="prose prose-sm max-w-none text-base-content/80 break-words overflow-hidden whitespace-pre-wrap">
                       <Content />
                     </div>
                     {entry.data.link && (
@@ -155,7 +155,7 @@ const entriesWithContent = await Promise.all(
                 </summary>
 
                 <div class="collapse-content">
-                  <div class="prose prose-sm max-w-none text-base-content/80">
+                  <div class="prose prose-sm max-w-none text-base-content/80 break-words overflow-hidden whitespace-pre-wrap">
                     <Content />
                   </div>
                   {entry.data.link && (
