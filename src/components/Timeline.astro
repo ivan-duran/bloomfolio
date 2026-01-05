@@ -54,7 +54,7 @@ const entriesWithContent = await Promise.all(
 ---
 
 <section id={collection} class={`py-20 px-4 bg-${backgroundColor}`}>
-  <div class={`mx-auto ${variant === "timeline" ? "max-w-4xl" : "max-w-4xl"}`}>
+  <div class="mx-auto max-w-4xl">
     <div class="text-center mb-12">
       <h2 class="text-4xl font-bold">{sectionTitle}</h2>
       {
@@ -66,64 +66,133 @@ const entriesWithContent = await Promise.all(
 
     {
       variant === "timeline" ? (
-        <ul class="timeline timeline-vertical timeline-compact md:timeline-snap-icon">
-          {entriesWithContent.map(({ entry, Content }, index) => (
-            <li>
-              {index > 0 && <hr class="bg-base-100" />}
-              <div class="timeline-middle">
-                <IconComponent class={`size-5 text-${color} mx-3 my-1`} />
-              </div>
-              <div
-                class={`timeline-end md:timeline-${index % 2 === 0 ? "start" : "end"} pt-3 mb-10`}
-              >
-                <time
-                  class={`font-mono text-sm text-base-content/70 block italic text-start md:${index % 2 === 0 ? "text-end" : "text-start"}`}
-                >
-                  {formatPeriod(entry.data.startDate, entry.data.endDate)}
-                </time>
-                <div class="card bg-base-100 shadow-xl mt-2">
-                  <div class="card-body">
-                    <div class="flex items-center gap-4 mb-2 min-w-0">
-                      {entry.data.logo && (
-                        <div class="avatar shrink-0">
-                          <div class="w-12 mask mask-squircle">
-                            <img src={entry.data.logo} alt={entry.data.title} />
+        <>
+          {/* Mobile (compact) */}
+          <ul class="timeline timeline-vertical timeline-compact md:hidden">
+            {entriesWithContent.map(({ entry, Content }, index) => (
+              <li>
+                {index > 0 && <hr class="bg-base-100" />}
+                <div class="timeline-middle">
+                  <IconComponent class={`size-5 text-${color} mx-3 my-1`} />
+                </div>
+
+                <div class="timeline-end pt-3 mb-10">
+                  <time class="font-mono text-sm text-base-content/70 block italic text-start">
+                    {formatPeriod(entry.data.startDate, entry.data.endDate)}
+                  </time>
+
+                  <div class="card bg-base-100 shadow-xl mt-2 w-full min-w-0">
+                    <div class="card-body">
+                      <div class="flex items-center gap-4 mb-2 min-w-0">
+                        {entry.data.logo && (
+                          <div class="avatar shrink-0">
+                            <div class="w-12 mask mask-squircle">
+                              <img src={entry.data.logo} alt={entry.data.title} />
+                            </div>
                           </div>
+                        )}
+                        <div class="min-w-0">
+                          <h3 class="card-title break-words">{entry.data.title}</h3>
+                          <p class={`text-${color} font-semibold break-words`}>
+                            {entry.data.subtitle}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div class="prose prose-sm max-w-none text-base-content/80 break-words overflow-hidden whitespace-pre-wrap">
+                        <Content />
+                      </div>
+
+                      {entry.data.link && (
+                        <div class="card-actions justify-end mt-4">
+                          <a
+                            href={entry.data.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="link link-hover"
+                          >
+                            {collection === "work"
+                              ? "View Company"
+                              : "View Institution"}
+                          </a>
                         </div>
                       )}
-                      <div class="min-w-0">
-                        <h3 class="card-title break-words">{entry.data.title}</h3>
-                        <p class={`text-${color} font-semibold break-words`}>
-                          {entry.data.subtitle}
-                        </p>
-                      </div>
                     </div>
-                    <div class="prose prose-sm max-w-none text-base-content/80 break-words overflow-hidden whitespace-pre-wrap">
-                      <Content />
-                    </div>
-                    {entry.data.link && (
-                      <div class="card-actions justify-end mt-4">
-                        <a
-                          href={entry.data.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          class="link link-hover"
-                        >
-                          {collection === "work"
-                            ? "View Company"
-                            : "View Institution"}
-                        </a>
-                      </div>
-                    )}
                   </div>
                 </div>
-              </div>
-              {index < entriesWithContent.length - 1 && (
-                <hr class="bg-base-100" />
-              )}
-            </li>
-          ))}
-        </ul>
+
+                {index < entriesWithContent.length - 1 && (
+                  <hr class="bg-base-100" />
+                )}
+              </li>
+            ))}
+          </ul>
+
+          {/* Desktop (alternating) */}
+          <ul class="timeline timeline-vertical timeline-snap-icon hidden md:block">
+            {entriesWithContent.map(({ entry, Content }, index) => (
+              <li>
+                {index > 0 && <hr class="bg-base-100" />}
+                <div class="timeline-middle">
+                  <IconComponent class={`size-5 text-${color} mx-3 my-1`} />
+                </div>
+
+                <div class={`timeline-${index % 2 === 0 ? "start" : "end"} pt-3 mb-10`}>
+                  <time
+                    class={`font-mono text-sm text-base-content/70 block italic ${
+                      index % 2 === 0 ? "text-end" : "text-start"
+                    }`}
+                  >
+                    {formatPeriod(entry.data.startDate, entry.data.endDate)}
+                  </time>
+
+                  <div class="card bg-base-100 shadow-xl mt-2 w-full min-w-0">
+                    <div class="card-body">
+                      <div class="flex items-center gap-4 mb-2 min-w-0">
+                        {entry.data.logo && (
+                          <div class="avatar shrink-0">
+                            <div class="w-12 mask mask-squircle">
+                              <img src={entry.data.logo} alt={entry.data.title} />
+                            </div>
+                          </div>
+                        )}
+                        <div class="min-w-0">
+                          <h3 class="card-title break-words">{entry.data.title}</h3>
+                          <p class={`text-${color} font-semibold break-words`}>
+                            {entry.data.subtitle}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div class="prose prose-sm max-w-none text-base-content/80 break-words overflow-hidden whitespace-pre-wrap">
+                        <Content />
+                      </div>
+
+                      {entry.data.link && (
+                        <div class="card-actions justify-end mt-4">
+                          <a
+                            href={entry.data.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="link link-hover"
+                          >
+                            {collection === "work"
+                              ? "View Company"
+                              : "View Institution"}
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {index < entriesWithContent.length - 1 && (
+                  <hr class="bg-base-100" />
+                )}
+              </li>
+            ))}
+          </ul>
+        </>
       ) : (
         <ul class="list bg-base-100 rounded-box shadow-lg">
           {entriesWithContent.map(({ entry, Content }, index) => (
@@ -141,9 +210,9 @@ const entriesWithContent = await Promise.all(
                       )}
                     </div>
 
-                    <div>
-                      <h3 class="font-bold text-lg">{entry.data.title}</h3>
-                      <p class={`text-${color} font-semibold text-sm`}>
+                    <div class="min-w-0">
+                      <h3 class="font-bold text-lg break-words">{entry.data.title}</h3>
+                      <p class={`text-${color} font-semibold text-sm break-words`}>
                         {entry.data.subtitle}
                       </p>
                     </div>
@@ -163,6 +232,7 @@ const entriesWithContent = await Promise.all(
                       <a
                         href={entry.data.link}
                         target="_blank"
+                        rel="noopener noreferrer"
                         class="link link-hover"
                       >
                         {collection === "work"
