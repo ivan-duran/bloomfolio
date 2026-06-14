@@ -1,5 +1,5 @@
 {
-  "name": "bloomfolio",
+  "name": "durandev",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -15,5 +15,9 @@
     "astro": "^5.15.2",
     "daisyui": "^5.3.10",
     "tailwindcss": "^4.1.16"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.9",
+    "typescript": "^5.9.3"
   }
 }

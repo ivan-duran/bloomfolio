@@ -1,4 +1,6 @@
 ---
+lang: "en"
+routeSlug: "company-1"
 title: "Estudiocienpies"
 subtitle: "Web Developer (Client Project – Oftalmosur)"
 logo: "/images/company-1.jpg"

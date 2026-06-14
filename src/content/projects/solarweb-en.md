@@ -1,4 +1,6 @@
 ---
+lang: "en"
+routeSlug: "solarweb"
 title: "SolarWeb: Remote Radiation Data Management"
 description: "Web platform developed to remotely visualize, manage, and export radiation sensor data, solving storage and performance challenges in a real academic environment."
 image: "./solarweb-preview.png"

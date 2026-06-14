@@ -1,4 +1,6 @@
 ---
+lang: "en"
+routeSlug: "university-1"
 title: "Universidad Austral de Chile (UACh)"
 subtitle: "Computer Engineering (B.Eng.)"
 logo: "https://api.dicebear.com/9.x/icons/svg?seed=UACh"

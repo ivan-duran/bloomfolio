@@ -1,0 +1,94 @@
+---
+import { render } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+import Hero from "../Hero.astro";
+import About from "../About.astro";
+import Timeline from "../Timeline.astro";
+import Projects from "../Projects.astro";
+import Hackathons from "../Hackathons.astro";
+import Contact from "../Contact.astro";
+import { Briefcase, GraduationCap } from "@lucide/astro";
+import { siteConfig } from "../../config";
+import { getLocalizedEntry } from "../../i18n/content";
+import { t, type Locale } from "../../i18n";
+import durandevLogo from "../../assets/durandev-avatar.png";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = t(locale);
+const profile = siteConfig.profile[locale];
+const seoDescription = profile.description.replace(/<[^>]*>/g, "");
+const aboutEntry = await getLocalizedEntry("about", locale, "about");
+
+if (!aboutEntry) {
+  throw new Error(`Missing about content for locale "${locale}"`);
+}
+
+const { Content: AboutContent } = await render(aboutEntry);
+---
+
+<Layout
+  locale={locale}
+  title={`${siteConfig.name} - ${copy.site.titleSuffix}`}
+  description={seoDescription}
+>
+  <main>
+    <Hero
+      locale={locale}
+      name={siteConfig.name}
+      title={profile.title}
+      description={profile.description}
+      avatar={durandevLogo}
+      location={profile.location}
+      email={siteConfig.email}
+      socialLinks={siteConfig.socialLinks}
+    />
+
+    {siteConfig.sections.projects && <Projects locale={locale} />}
+
+    {
+      siteConfig.sections.work && (
+        <Timeline
+          locale={locale}
+          collection="work"
+          variant="timeline"
+          color="primary"
+          icon={Briefcase}
+          sectionTitle={copy.sections.work}
+        />
+      )
+    }
+
+    {
+      siteConfig.sections.about && (
+        <About
+          locale={locale}
+          title={aboutEntry.data.title}
+          photo={aboutEntry.data.photo}
+          Content={AboutContent}
+        />
+      )
+    }
+
+    {
+      siteConfig.sections.education && (
+        <Timeline
+          locale={locale}
+          collection="education"
+          variant="list"
+          color="secondary"
+          backgroundColor="base-300"
+          icon={GraduationCap}
+          sectionTitle={copy.sections.education}
+        />
+      )
+    }
+
+    {siteConfig.sections.hackathons && <Hackathons locale={locale} />}
+
+    {siteConfig.sections.contact && <Contact locale={locale} />}
+  </main>
+</Layout>

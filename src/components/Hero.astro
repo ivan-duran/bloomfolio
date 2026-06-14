@@ -1,8 +1,10 @@
 ---
 import { FolderCode } from "@lucide/astro";
 import { Image } from "astro:assets";
+import { t, type Locale } from "../i18n";
 
 interface Props {
+  locale: Locale;
   name: string;
   title: string;
   description: string;
@@ -20,7 +22,8 @@ interface Props {
   };
 }
 
-const { name, title, description, avatar, location, email, socialLinks } = Astro.props;
+const { locale, name, title, description, avatar, location, email, socialLinks } = Astro.props;
+const copy = t(locale);
 ---
 
 <section class="hero min-h-screen">
@@ -34,7 +37,7 @@ const { name, title, description, avatar, location, email, socialLinks } = Astro
     </div>
     <div class="max-w-2xl">
       <h1 class="text-5xl font-bold mb-4">
-        Hi, I'm {name}
+        {copy.hero.greeting} {name}
       </h1>
       <p class="text-xl text-base-content/80 mb-2" set:html={title} />
       {location && <p class="text-base-content/60 mb-4">{location}</p>}

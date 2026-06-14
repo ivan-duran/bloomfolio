@@ -2,18 +2,32 @@
 import "../styles/global.css";
 import ThemeToggle from "../components/ThemeToggle.astro";
 import ThemeSelector from "../components/ThemeSelector.astro";
+import LanguageToggle from "../components/LanguageToggle.astro";
 import FabFlower from "../components/FabFlower.astro";
 import { ClientRouter } from "astro:transitions";
 import { siteConfig } from "../config";
+import {
+  defaultLocale,
+  getLocaleFromPathname,
+  localizePath,
+  locales,
+  ogLocales,
+  t,
+  type Locale,
+} from "../i18n";
 
 interface Props {
   title?: string;
   description?: string;
+  locale?: Locale;
+  alternatePaths?: Partial<Record<Locale, string>>;
 }
 
 const {
-  title = "Bloomfolio Template",
-  description = "A modern portfolio template built with Astro and DaisyUI",
+  locale = getLocaleFromPathname(Astro.url.pathname),
+  title = t(locale).site.defaultTitle,
+  description = t(locale).site.defaultDescription,
+  alternatePaths,
 } = Astro.props;
 
 // Custom blur-fade animation configuration
@@ -38,14 +52,49 @@ const pageTransition = {
 };
 
 const origin = Astro.url.origin;
+const currentPathname = Astro.url.pathname;
+const resolvedAlternatePaths =
+  alternatePaths ??
+  Object.fromEntries(
+    locales.map((alternateLocale) => [
+      alternateLocale,
+      localizePath(currentPathname, alternateLocale),
+    ]),
+  );
+const canonicalPath = resolvedAlternatePaths[locale] ?? localizePath(currentPathname, locale);
+const canonicalUrl = new URL(canonicalPath, origin).toString();
 ---
 
 <!doctype html>
-<html lang="en" transition:animate={pageTransition}>
+<html lang={locale} data-language={locale} transition:animate={pageTransition}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    {
+      locales.map((alternateLocale) => {
+        const alternatePath = resolvedAlternatePaths[alternateLocale];
+        return (
+          alternatePath && (
+            <link
+              rel="alternate"
+              hreflang={alternateLocale}
+              href={new URL(alternatePath, origin).toString()}
+            />
+          )
+        );
+      })
+    }
+    {
+      resolvedAlternatePaths[defaultLocale] && (
+        <link
+          rel="alternate"
+          hreflang="x-default"
+          href={new URL(resolvedAlternatePaths[defaultLocale], origin).toString()}
+        />
+      )
+    }
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
@@ -57,7 +106,8 @@ const origin = Astro.url.origin;
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={origin} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content={ogLocales[locale]} />
     <meta property="og:image" content={`${origin}/images/og_home.png`} />
 
     <!-- Twitter -->
@@ -67,8 +117,9 @@ const origin = Astro.url.origin;
     <meta name="twitter:image" content={`${origin}/images/og_home.png`} />
   </head>
   <body class="min-h-screen">
-    <!-- Theme Controls - Fixed Position -->
-    <div class="fixed top-4 right-4 z-50">
+    <!-- Controls - Fixed Position -->
+    <div class="fixed top-4 right-4 z-50 flex items-center gap-3">
+      <LanguageToggle locale={locale} pathname={currentPathname} />
       {siteConfig.enableThemeSelector ? <ThemeSelector /> : <ThemeToggle />}
     </div>
 
@@ -76,7 +127,7 @@ const origin = Astro.url.origin;
 
     {
       siteConfig.extraLinks.enable && (
-        <FabFlower extraLinks={siteConfig.extraLinks} />
+        <FabFlower extraLinks={siteConfig.extraLinks} locale={locale} />
       )
     }
 

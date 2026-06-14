@@ -1,39 +1,31 @@
 ---
 import { getCollection } from "astro:content";
+import { formatDateRange, t, type Locale } from "../i18n";
 
-const hackathonEntries = await getCollection("hackathons");
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = t(locale);
+const hackathonEntries = await getCollection(
+  "hackathons",
+  ({ data }) => data.lang === locale,
+);
 
 // Sort by start date, most recent first
 const sortedHackathons = hackathonEntries.sort(
   (a, b) => b.data.startDate.getTime() - a.data.startDate.getTime()
 );
 
-function formatPeriod(startDate: Date, endDate?: Date) {
-  const options: Intl.DateTimeFormatOptions = {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  };
-  const start = startDate.toLocaleDateString("en-US", options);
-
-  if (endDate && endDate.getTime() !== startDate.getTime()) {
-    const end = endDate.toLocaleDateString("en-US", options);
-    return `${start} - ${end}`;
-  }
-
-  return start;
-}
 ---
 
 <section id="hackathons" class="py-20 px-4">
   <div class="max-w-4xl mx-auto">
     <div class="text-center mb-12">
-      <h2 class="text-4xl font-bold mb-4">I like building things</h2>
+      <h2 class="text-4xl font-bold mb-4">{copy.sections.hackathons.title}</h2>
       <p class="text-lg text-base-content/70">
-        During my time in university, I attended multiple hackathons. People
-        from around the country would come together and build incredible things
-        in 2-3 days. It was eye-opening to see the endless possibilities brought
-        to life by a group of motivated and passionate individuals.
+        {copy.sections.hackathons.subtitle}
       </p>
     </div>
 
@@ -55,9 +47,10 @@ function formatPeriod(startDate: Date, endDate?: Date) {
                 )}
                 <div class="flex-1">
                   <time class="text-sm text-base-content/60">
-                    {formatPeriod(
+                    {formatDateRange(
                       hackathon.data.startDate,
-                      hackathon.data.endDate
+                      hackathon.data.endDate,
+                      locale
                     )}
                   </time>
                   <h3 class="card-title mt-1">{hackathon.data.title}</h3>
@@ -75,7 +68,7 @@ function formatPeriod(startDate: Date, endDate?: Date) {
                         rel="noopener noreferrer"
                         class="btn btn-sm btn-outline btn-primary"
                       >
-                        View Project
+                        {copy.actions.viewProject}
                       </a>
                     </div>
                   )}

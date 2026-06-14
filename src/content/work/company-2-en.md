@@ -1,4 +1,6 @@
 ---
+lang: "en"
+routeSlug: "company-2"
 title: "Universidad Austral de Chile (UACh)"
 subtitle: "Full-Stack Web Developer (Academic Project)"
 logo: "/images/company-2.png"

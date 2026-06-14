@@ -1,17 +1,25 @@
 ---
 import { MessageCircleCode } from "@lucide/astro";
 import { siteConfig } from "../config";
+import { t, type Locale } from "../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = t(locale);
 ---
 
 <footer class="footer footer-horizontal footer-center bg-base-200 py-10">
   <aside>
     <MessageCircleCode class="inline-block size-20" />
     <p class="max-w-xl m-auto text-lg">
-      <strong>Interested in working together?</strong> Send me an email at <a
+      <strong>{copy.messages.contactPrefix}</strong> {copy.messages.contactMiddle} <a
         href={`mailto:${siteConfig.email}`}
         class="link link-hover text-primary"
         >{siteConfig.email}</a
-      > or contact me on <a
+      > {copy.messages.contactOr} <a
         href={siteConfig.socialLinks.linkedin}
         target="_blank"
         class="link link-hover text-primary"

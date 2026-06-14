@@ -3,8 +3,16 @@ import Layout from "./Layout.astro";
 import { Image } from "astro:assets";
 import SkillBadge from "../components/SkillBadge.astro";
 import { ExternalLink } from "@lucide/astro";
+import {
+  calculateDuration,
+  formatPeriod,
+  localizePath,
+  t,
+  type Locale,
+} from "../i18n";
 
 interface Props {
+  locale: Locale;
   title: string;
   description: string;
   startDate: Date;
@@ -13,9 +21,11 @@ interface Props {
   skills: string[];
   demoLink?: string;
   sourceLink?: string;
+  alternatePaths?: Partial<Record<Locale, string>>;
 }
 
 const {
+  locale,
   title,
   description,
   startDate,
@@ -24,44 +34,21 @@ const {
   skills,
   demoLink,
   sourceLink,
+  alternatePaths,
 } = Astro.props;
-
-function formatPeriod(startDate: Date, endDate?: Date) {
-  const options: Intl.DateTimeFormatOptions = {
-    month: "short",
-    year: "numeric",
-  };
-  const start = startDate.toLocaleDateString("en-US", options);
-  const end = endDate
-    ? endDate.toLocaleDateString("en-US", options)
-    : "Present";
-  return `${start} - ${end}`;
-}
-
-// Calculate project duration
-function calculateDuration(startDate: Date, endDate?: Date) {
-  const end = endDate || new Date();
-  const months =
-    (end.getFullYear() - startDate.getFullYear()) * 12 +
-    (end.getMonth() - startDate.getMonth());
-
-  if (months < 1) return "Less than a month";
-  if (months === 1) return "1 month";
-  if (months < 12) return `${months} months`;
-
-  const years = Math.floor(months / 12);
-  const remainingMonths = months % 12;
-
-  if (remainingMonths === 0) return years === 1 ? "1 year" : `${years} years`;
-  return `${years} year${years > 1 ? "s" : ""}, ${remainingMonths} month${remainingMonths > 1 ? "s" : ""}`;
-}
+const copy = t(locale);
 ---
 
-<Layout title={title} description={description}>
+<Layout
+  title={title}
+  description={description}
+  locale={locale}
+  alternatePaths={alternatePaths}
+>
   <article class="max-w-4xl mx-auto px-4 py-20">
     <!-- Back button -->
     <div class="mb-8">
-      <a href="/projects" class="btn btn-ghost btn-sm">
+      <a href={localizePath("/projects", locale)} class="btn btn-ghost btn-sm">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="20"
@@ -75,7 +62,7 @@ function calculateDuration(startDate: Date, endDate?: Date) {
         >
           <path d="m15 18-6-6 6-6"></path>
         </svg>
-        Back to Projects
+        {copy.actions.backToProjects}
       </a>
     </div>
 
@@ -103,14 +90,14 @@ function calculateDuration(startDate: Date, endDate?: Date) {
       <div
         class="flex flex-wrap items-center gap-4 text-sm text-base-content/60 mb-6"
       >
-        <span class="font-semibold">{formatPeriod(startDate, endDate)}</span>
+        <span class="font-semibold">{formatPeriod(startDate, endDate, locale)}</span>
         <span>•</span>
-        <span>{calculateDuration(startDate, endDate)}</span>
+        <span>{calculateDuration(startDate, endDate, locale)}</span>
         {
           !endDate && (
             <>
               <span>•</span>
-              <span class="badge badge-success badge-sm">Ongoing</span>
+              <span class="badge badge-success badge-sm">{copy.labels.ongoing}</span>
             </>
           )
         }
@@ -128,7 +115,7 @@ function calculateDuration(startDate: Date, endDate?: Date) {
                 class="btn btn-primary gap-2"
               >
                 <ExternalLink class="size-5" />
-                Live Demo
+                {copy.actions.liveDemo}
               </a>
             )}
             {sourceLink && (
@@ -147,7 +134,7 @@ function calculateDuration(startDate: Date, endDate?: Date) {
                 >
                   <path d="M16,2.345c7.735,0,14,6.265,14,14-.002,6.015-3.839,11.359-9.537,13.282-.7,.14-.963-.298-.963-.665,0-.473,.018-1.978,.018-3.85,0-1.312-.437-2.152-.945-2.59,3.115-.35,6.388-1.54,6.388-6.912,0-1.54-.543-2.783-1.435-3.762,.14-.35,.63-1.785-.14-3.71,0,0-1.173-.385-3.85,1.435-1.12-.315-2.31-.472-3.5-.472s-2.38,.157-3.5,.472c-2.677-1.802-3.85-1.435-3.85-1.435-.77,1.925-.28,3.36-.14,3.71-.892,.98-1.435,2.24-1.435,3.762,0,5.355,3.255,6.563,6.37,6.913-.403,.35-.77,.963-.893,1.872-.805,.368-2.818,.963-4.077-1.155-.263-.42-1.05-1.452-2.152-1.435-1.173,.018-.472,.665,.017,.927,.595,.332,1.277,1.575,1.435,1.978,.28,.787,1.19,2.293,4.707,1.645,0,1.173,.018,2.275,.018,2.607,0,.368-.263,.787-.963,.665-5.719-1.904-9.576-7.255-9.573-13.283,0-7.735,6.265-14,14-14Z" />
                 </svg>
-                View Source
+                {copy.actions.viewSource}
               </a>
             )}
           </div>
@@ -155,7 +142,7 @@ function calculateDuration(startDate: Date, endDate?: Date) {
       }
       {demoLink?.includes("solarweb.lat") && (
         <p class="text-sm text-base-content/60 mb-6">
-          Note: Public access is limited due to authentication requirements.
+          {copy.messages.solarwebAccess}
         </p>
       )}
     </header>
@@ -165,7 +152,7 @@ function calculateDuration(startDate: Date, endDate?: Date) {
       skills && skills.length > 0 && (
         <div class="card bg-base-200 mb-8">
           <div class="card-body">
-            <h2 class="card-title text-lg mb-3">Tech Stack</h2>
+            <h2 class="card-title text-lg mb-3">{copy.labels.techStack}</h2>
             <div class="flex flex-wrap gap-2">
               {skills.map((skill) => (
                 <SkillBadge skill={skill} />
@@ -189,7 +176,9 @@ function calculateDuration(startDate: Date, endDate?: Date) {
 
     <!-- Back to projects link -->
     <div class="text-center mt-8">
-      <a href="/projects" class="btn btn-primary"> View All Projects </a>
+      <a href={localizePath("/projects", locale)} class="btn btn-primary">
+        {copy.actions.viewAllProjects}
+      </a>
     </div>
   </article>
 </Layout>

@@ -5,8 +5,7 @@
  * Update these values to personalize your portfolio site.
  */
 
-import { BookOpen, FileText, Flower2, CodeXml } from "@lucide/astro";
-import { Code } from "astro:components";
+import type { Locale } from "./i18n";
 
 /**
  * Social media links configuration
@@ -30,7 +29,7 @@ export interface ExtraLink {
   /** Lucide icon component */
   icon: any;
   /** Tooltip label for the link */
-  label: string;
+  label: Record<Locale, string>;
 }
 
 /**
@@ -52,8 +51,6 @@ export interface SectionsConfig {
   about: boolean;
   /** Show/hide Projects section */
   projects: boolean;
-  /** Show/hide Blog section */
-  blog: boolean;
   /** Show/hide Work Experience section */
   work: boolean;
   /** Show/hide Education section */
@@ -64,22 +61,27 @@ export interface SectionsConfig {
   contact: boolean;
 }
 
+export interface LocalizedProfile {
+  /** Main title/headline */
+  title: string;
+  /** Site description for SEO and hero section */
+  description: string;
+  /** Location/City */
+  location: string;
+}
+
 /**
  * Main site configuration interface
  */
 export interface SiteConfig {
   /** Site/Portfolio name */
   name: string;
-  /** Main title/headline */
-  title: string;
-  /** Site description for SEO and hero section */
-  description: string;
   /** Path to avatar/logo image */
   avatar: string;
-  /** Location/City */
-  location: string;
   /** Contact email */
   email: string;
+  /** Localized profile copy */
+  profile: Record<Locale, LocalizedProfile>;
   /** Social media profile links */
   socialLinks: SocialLinks;
   /** Enable ThemeSelector (dropdown) instead of ThemeToggle (checkbox) */
@@ -96,12 +98,24 @@ export interface SiteConfig {
  */
 export const siteConfig: SiteConfig = {
   name: "Iván Durán",
-  title: "<Strong>Full-Stack Web Developer | 5th-year Computer Engineering (UACh)</Strong>",
-  description:
-    "I build web applications using <Strong>React, Angular, and Astro</Strong>, backed by <Strong>FastAPI and PostgreSQL</Strong>, with a strong focus on <Strong>user experience and best development practices.</Strong>",
-  avatar: "../assets/bloomfolio.png",
-  location: "🇨🇱 Valdivia, Chile",
+  avatar: "../assets/durandev-avatar.png",
   email: "ivan@durandev.com",
+  profile: {
+    es: {
+      title:
+        "<Strong>Desarrollador Web Full-Stack | Estudiante de Ingeniería Civil en Informática (UACh)</Strong>",
+      description:
+        "Construyo aplicaciones web con <Strong>React, Angular y Astro</Strong>, respaldadas por <Strong>FastAPI y PostgreSQL</Strong>, con foco en <Strong>experiencia de usuario y buenas prácticas de desarrollo.</Strong>",
+      location: "🇨🇱 Valdivia, Chile",
+    },
+    en: {
+      title:
+        "<Strong>Full-Stack Web Developer | 5th-year Computer Engineering (UACh)</Strong>",
+      description:
+        "I build web applications using <Strong>React, Angular, and Astro</Strong>, backed by <Strong>FastAPI and PostgreSQL</Strong>, with a strong focus on <Strong>user experience and best development practices.</Strong>",
+      location: "🇨🇱 Valdivia, Chile",
+    },
+  },
   socialLinks: {
     github: "https://github.com/ivan-duran",
     linkedin: "https://www.linkedin.com/in/ivan-duran-40745a2ba/",
@@ -114,33 +128,11 @@ export const siteConfig: SiteConfig = {
   enableThemeSelector: false,
   extraLinks: {
     enable: false,
-    links: [
-      {
-        link: "/blog/guides/bloomfolio-complete-guide",
-        icon: Flower2,
-        label: "Bloomfolio Guide",
-      },
-      {
-        link: "/blog/guides/content-collections-guide",
-        icon: BookOpen,
-        label: "Content Guide",
-      },
-      {
-        link: "/blog/guides/markdown-guide",
-        icon: FileText,
-        label: "Markdown Guide",
-      },
-      {
-        link: "https://github.com/lauroguedes/bloomfolio",
-        icon: CodeXml,
-        label: "GitHub Repo",
-      },
-    ],
+    links: [],
   },
   sections: {
     about: true,
     projects: true,
-    blog: false,
     work: true,
     education: true,
     hackathons: false,

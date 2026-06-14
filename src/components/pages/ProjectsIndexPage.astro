@@ -1,0 +1,67 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ProjectCard from "../ProjectCard.astro";
+import { getLocalizedCollection } from "../../i18n/content";
+import { localizePath, t, type Locale } from "../../i18n";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const copy = t(locale);
+const projects = await getLocalizedCollection("projects", locale);
+const sortedProjects = projects.sort(
+  (a, b) => b.data.startDate.getTime() - a.data.startDate.getTime(),
+);
+---
+
+<Layout
+  locale={locale}
+  title={copy.pages.projects.seoTitle}
+  description={copy.pages.projects.description}
+>
+  <main class="max-w-6xl mx-auto px-4 py-20">
+    <div class="text-center mb-16">
+      <h1 class="text-5xl font-bold mb-4">{copy.pages.projects.title}</h1>
+      <p class="text-xl text-base-content/70">
+        {copy.pages.projects.description}
+      </p>
+    </div>
+
+    <div class="mb-8">
+      <a href={localizePath("/", locale)} class="btn btn-ghost btn-sm">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="m15 18-6-6 6-6"></path>
+        </svg>
+        {copy.actions.backToHome}
+      </a>
+    </div>
+
+    {
+      sortedProjects.length === 0 ? (
+        <div class="text-center py-20">
+          <p class="text-2xl text-base-content/60">
+            {copy.messages.noProjects}
+          </p>
+        </div>
+      ) : (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {sortedProjects.map((project) => (
+            <ProjectCard project={project} locale={locale} />
+          ))}
+        </div>
+      )
+    }
+  </main>
+</Layout>

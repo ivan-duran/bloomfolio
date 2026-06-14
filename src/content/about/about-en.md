@@ -1,4 +1,6 @@
 ---
+lang: "en"
+routeSlug: "about"
 title: "About Me"
 photo: "/avatar.png"
 ---

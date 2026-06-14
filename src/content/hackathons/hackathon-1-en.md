@@ -1,4 +1,6 @@
 ---
+lang: "en"
+routeSlug: "hackathon-1"
 title: "TechHacks 2023"
 location: "San Francisco, CA"
 description: "Built a machine learning-powered chatbot that helps students find relevant study resources. Won Best Use of AI award."

@@ -1,4 +1,6 @@
 ---
+lang: "en"
+routeSlug: "oftalmosur"
 title: "Oftalmosur Clinic Website"
 description: "Website developed from scratch for a medical clinic, focused on user experience, clarity, and responsive design."
 image: "./oftalmosur-preview.png"

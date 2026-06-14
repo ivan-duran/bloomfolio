@@ -1,0 +1,69 @@
+---
+import { localeNames, switchLocalePath, t, type Locale } from "../i18n";
+
+interface Props {
+  locale: Locale;
+  pathname: string;
+}
+
+const { locale, pathname } = Astro.props;
+const targetLocale: Locale = locale === "es" ? "en" : "es";
+const targetPath = switchLocalePath(pathname, targetLocale);
+const isEnglish = locale === "en";
+const copy = t(locale);
+const label = `${copy.labels.switchLanguageTo} ${localeNames[targetLocale]}`;
+---
+
+<label
+  class="swap swap-flip btn btn-circle btn-ghost"
+  aria-label={label}
+  title={label}
+>
+  <input
+    type="checkbox"
+    class="language-controller"
+    checked={isEnglish}
+    data-target-locale={targetLocale}
+    data-target-path={targetPath}
+  />
+  <span class="swap-off text-xs font-bold">ES</span>
+  <span class="swap-on text-xs font-bold">EN</span>
+</label>
+
+<script is:inline>
+  function syncLanguageToggle() {
+    const locale =
+      window.location.pathname === "/en" ||
+      window.location.pathname.startsWith("/en/")
+        ? "en"
+        : "es";
+
+    document.documentElement.lang = locale;
+    document.documentElement.dataset.language = locale;
+
+    document.querySelectorAll(".language-controller").forEach((controller) => {
+      controller.checked = locale === "en";
+    });
+  }
+
+  document.addEventListener("change", (event) => {
+    const target = event.target;
+
+    if (!target.classList?.contains("language-controller")) return;
+
+    const targetLocale = target.dataset.targetLocale;
+    const targetPath = target.dataset.targetPath;
+
+    if (!targetLocale || !targetPath) return;
+
+    localStorage.setItem("language", targetLocale);
+
+    const nextUrl = new URL(targetPath, window.location.origin);
+    nextUrl.search = window.location.search;
+    nextUrl.hash = window.location.hash;
+    window.location.href = nextUrl.toString();
+  });
+
+  syncLanguageToggle();
+  document.addEventListener("astro:after-swap", syncLanguageToggle);
+</script>

@@ -1,7 +1,9 @@
 ---
 import { getCollection, render } from "astro:content";
+import { formatPeriod, t, type Locale } from "../i18n";
 
 interface Props {
+  locale: Locale;
   collection: "work" | "education";
   variant: "timeline" | "list";
   color?: string;
@@ -12,6 +14,7 @@ interface Props {
 }
 
 const {
+  locale,
   collection,
   variant,
   color = "primary",
@@ -20,29 +23,21 @@ const {
   sectionTitle,
   sectionSubtitle,
 } = Astro.props;
+const copy = t(locale);
 
 // Dynamic component - must be capitalized
 const IconComponent = icon;
 
 // Load collection entries
-const entries = await getCollection(collection);
+const entries = await getCollection(
+  collection,
+  ({ data }) => data.lang === locale,
+);
 
 // Sort by start date, most recent first
 const sortedEntries = entries.sort(
   (a, b) => b.data.startDate.getTime() - a.data.startDate.getTime()
 );
-
-function formatPeriod(startDate: Date, endDate?: Date) {
-  const options: Intl.DateTimeFormatOptions = {
-    month: "short",
-    year: "numeric",
-  };
-  const start = startDate.toLocaleDateString("en-US", options);
-  const end = endDate
-    ? endDate.toLocaleDateString("en-US", options)
-    : "Present";
-  return `${start} - ${end}`;
-}
 
 // Render markdown content for each entry
 const entriesWithContent = await Promise.all(
@@ -78,7 +73,7 @@ const entriesWithContent = await Promise.all(
 
                 <div class="timeline-end pt-3 mb-10">
                   <time class="font-mono text-sm text-base-content/70 block italic text-start">
-                    {formatPeriod(entry.data.startDate, entry.data.endDate)}
+                    {formatPeriod(entry.data.startDate, entry.data.endDate, locale)}
                   </time>
 
                   <div class="card bg-base-100 shadow-xl mt-2 w-full min-w-0">
@@ -112,8 +107,8 @@ const entriesWithContent = await Promise.all(
                             class="link link-hover"
                           >
                             {collection === "work"
-                              ? "View Company"
-                              : "View Institution"}
+                              ? copy.actions.viewCompany
+                              : copy.actions.viewInstitution}
                           </a>
                         </div>
                       )}
@@ -143,7 +138,7 @@ const entriesWithContent = await Promise.all(
                       index % 2 === 0 ? "text-end" : "text-start"
                     }`}
                   >
-                    {formatPeriod(entry.data.startDate, entry.data.endDate)}
+                    {formatPeriod(entry.data.startDate, entry.data.endDate, locale)}
                   </time>
 
                   <div class="card bg-base-100 shadow-xl mt-2 w-full min-w-0">
@@ -177,8 +172,8 @@ const entriesWithContent = await Promise.all(
                             class="link link-hover"
                           >
                             {collection === "work"
-                              ? "View Company"
-                              : "View Institution"}
+                              ? copy.actions.viewCompany
+                              : copy.actions.viewInstitution}
                           </a>
                         </div>
                       )}
@@ -195,7 +190,7 @@ const entriesWithContent = await Promise.all(
         </>
       ) : (
         <ul class="list bg-base-100 rounded-box shadow-lg">
-          {entriesWithContent.map(({ entry, Content }, index) => (
+          {entriesWithContent.map(({ entry, Content }) => (
             <li class="border-b hover:opacity-85 transition-opacity border-base-300 last:border-b-0">
               <details class="collapse">
                 <summary class="collapse-title pe-5">
@@ -218,7 +213,7 @@ const entriesWithContent = await Promise.all(
                     </div>
 
                     <div class="text-sm text-base-content/70 font-mono whitespace-nowrap">
-                      {formatPeriod(entry.data.startDate, entry.data.endDate)}
+                      {formatPeriod(entry.data.startDate, entry.data.endDate, locale)}
                     </div>
                   </div>
                 </summary>
@@ -236,8 +231,8 @@ const entriesWithContent = await Promise.all(
                         class="link link-hover"
                       >
                         {collection === "work"
-                          ? "View Company"
-                          : "View Institution"}
+                          ? copy.actions.viewCompany
+                          : copy.actions.viewInstitution}
                       </a>
                     </div>
                   )}
